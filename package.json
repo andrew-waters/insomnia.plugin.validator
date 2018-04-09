@@ -1,0 +1,30 @@
+{
+  "name": "insomnia-plugin-validator",
+  "version": "1.0.0",
+  "description": "Validate an API call returns a (swagger specified) correct response",
+  "main": "plugin.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrew_waters/insomnia.plugin.validator.git"
+  },
+  "keywords": [
+    "insomnia",
+    "plugin",
+    "response",
+    "swagger",
+    "validation"
+  ],
+  "insomnia": {
+    "name": "insomnia-plugin-validator",
+    "description": "Validate an API call returns a (swagger specified) correct response"
+  },
+  "author": "andrew_waters",
+  "homepage": "https://github.com/andrew-waters/insomnia.plugin.validator#readme",
+  "bugs": {
+    "url": "https://github.com/andrew-waters/insomnia.plugin.validator/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "tv4": "^1.3.0"
+  }
+}
