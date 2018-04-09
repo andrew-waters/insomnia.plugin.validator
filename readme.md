@@ -29,7 +29,7 @@ Now when you make requests to the API, the response body will be validated again
 
 ## Warnings and Improvements
 
- - This plugin will not work generically at the moment, it is PoC. It is not possibnle to access the environment or the request when dealing with a response context. This functionality has been [promised for a future release](https://github.com/getinsomnia/insomnia/issues/853#issuecomment-379618546).
+ - This plugin will not work generically at the moment, it is PoC. It is not possible to access the environment or the request when dealing with a response context. This functionality has been [promised for a future release](https://github.com/getinsomnia/insomnia/issues/853#issuecomment-379618546).
  - At the moment, you need to restart insomnia whenever your spec file changes which is far from ideal.
  - The interface is lacking - any errors will simply produce a prompt. There is a lack of configurability available to API developers to utilise the application's UI. [Hoping](https://github.com/getinsomnia/insomnia/issues/855) this makes it into a future release.
  - There is no test coverage at the moment.

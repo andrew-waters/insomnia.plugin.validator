@@ -40,7 +40,7 @@ module.exports.responseHooks = [
             // get the status code from the response
             let statusCode = context.response.getStatusCode();
 
-            // parse the body from the buffer to an objet
+            // parse the body from the buffer to an object
             let body = JSON.parse(bodyBuffer);
 
             // load the schema
