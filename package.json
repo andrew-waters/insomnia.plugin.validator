@@ -5,7 +5,7 @@
   "main": "plugin.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andrew_waters/insomnia.plugin.validator.git"
+    "url": "git+https://github.com/andrew-waters/insomnia.plugin.validator.git"
   },
   "keywords": [
     "insomnia",
