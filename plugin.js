@@ -2,23 +2,35 @@ const fs = require('fs');
 const tv4 = require('tv4');
 const specName = 'spec';
 
+log = (msg) => {
+    console.log("[plugin] [spec validator]", msg);
+}
+
 module.exports.responseHooks = [
     context => {
+
+        let config = context.request.getEnvironmentVariable('spec_validator');
+
+        if (!config.enabled) {
+            log("Plugin is disabled");
+            return;
+        }
+
+        if (config.path === undefined || config.path === "") {
+            log("No path to the spec - please use the absolute path");
+            return;
+        }
+
+        if (!config.base || config.base === undefined) {
+            log("No base in the config - cannot validate");
+            return;
+        }
+
         let bodyBuffer = context.response.getBody();
 
         // ignore when there is no body to validate
         if (bodyBuffer === null) {
-            return;
-        }
-
-        // @todo load the config from the environment
-        // let config = context.response.getEnvironmentVariable('spec');
-        let config = {
-            path: '/Users/andrew_waters/Desktop/spec.json',
-            enabled: true
-        };
-
-        if (!config.enabled || config.path === undefined) {
+            log("No body in the response to validate");
             return;
         }
 
@@ -26,16 +38,14 @@ module.exports.responseHooks = [
         fs.exists(config.path, function (exists) {
 
             if (!exists) {
+                log("Spec does not exist at the location - please update the path");
                 return;
             }
 
-            // @todo get the path from the request
-            // let path = context.request.getUrl(); // <- we may have quite a bit of work to do getting the path from the URL
-            let path = '/products';
+            let url = context.request.getUrl();
+            let path = url.replace(config.base, '');
 
-            // @todo get the request method from the request
-            // let requestMethod = context.request.getMethod().toLowerCase();
-            let requestMethod = 'get';
+            let requestMethod = context.request.getMethod().toLowerCase();
 
             // get the status code from the response
             let statusCode = context.response.getStatusCode();
@@ -56,6 +66,7 @@ module.exports.responseHooks = [
                 target = map[specName].paths[path][requestMethod].responses[statusCode].schema;
             } catch (err) {
                 // we don't have a matching schema to check against
+                log("no valid spec path for this endpoint");
                 return;
             }
 
@@ -63,19 +74,21 @@ module.exports.responseHooks = [
 
             if (result.missing.length > 0) {
                 // we have a missing spec
-                alert('Missing Spec for this response')
-                console.log(result)
+                alert('Missing Spec for this response');
+                log(result)
                 return;
             }
 
             if (result.errors.length > 0) {
                 // spec validation failed
-                alert('Response format does not match spec')
-                console.log(result)
+                alert('Response format does not match spec');
+                log(result)
                 return;
             }
 
             // the spec validates without issue =)
+            log("Response matches specification");
+            return;
 
         });
     }
